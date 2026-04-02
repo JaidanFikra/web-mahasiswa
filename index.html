@@ -119,6 +119,58 @@
             margin-right: 8px;
         }
 
+        /* PRESTASI */
+        .achievement {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f5f7fa;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .achievement:hover {
+            background: #eaf2f8;
+        }
+
+        .achievement .icon {
+            font-size: 20px;
+            color: #3498db;
+            margin-top: 3px;
+        }
+
+        /* KHUSUS YANG TIDAK BISA DIKLIK */
+        .no-click {
+            cursor: default;
+        }
+
+        .no-click:hover {
+            background: #f5f7fa;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -148,6 +200,7 @@
 <nav>
     <a href="#profil">Profil</a>
     <a href="#biodata">Biodata</a>
+    <a href="#prestasi">Prestasi</a>
     <a href="#kontak">Kontak</a>
 </nav>
 
@@ -197,16 +250,33 @@
                 <td>Jurusan</td>
                 <td>Teknologi Informasi</td>
             </tr>
-            <tr>
-                <td>Email</td>
-                <td>
-                    <a href="mailto:jaidanfikra@gmail.com">
-                        <i class="fa-solid fa-envelope icon"></i>
-                        jaidanfikra@gmail.com
-                    </a>
-                </td>
-            </tr>
         </table>
+    </div>
+</section>
+
+<!-- PRESTASI -->
+<section id="prestasi">
+    <div class="card">
+        <h2>Prestasi</h2>
+
+        <!-- OSN -->
+        <div class="achievement" onclick="openModal('uploads/osn.jpg')">
+            <i class="fa-solid fa-trophy icon"></i>
+            <div>
+                <b>OSN 2023</b><br>
+                Juara tingkat Kabupaten Aceh Singkil bidang Informatika (klik untuk lihat sertifikat)
+            </div>
+        </div>
+
+        <!-- BEASISWA -->
+        <div class="achievement no-click">
+            <i class="fa-solid fa-award icon"></i>
+            <div>
+                <b>Beasiswa 2024</b><br>
+                Peserta verifikasi administrasi Beasiswa Adik.
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -231,6 +301,22 @@
 <footer>
     <p>© 2026 Portal Mahasiswa | Universitas Islam Negeri Ar-raniry</p>
 </footer>
+
+<!-- MODAL -->
+<div id="modal" class="modal" onclick="closeModal()">
+    <img id="modal-img">
+</div>
+
+<script>
+function openModal(src) {
+    document.getElementById("modal").style.display = "block";
+    document.getElementById("modal-img").src = src;
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+</script>
 
 </body>
 </html>
