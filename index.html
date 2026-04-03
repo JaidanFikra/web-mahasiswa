@@ -13,193 +13,182 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* Pengaturan Dasar */
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary: #3498db;
+            --dark: #2c3e50;
+            --light-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #333;
+            --timeline-line: #ddd;
         }
+
+        body.dark-theme {
+            --light-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #f5f5f5;
+            --dark: #121212;
+            --timeline-line: #444;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--light-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: #f5f7fa;
-            color: #333;
+            background: var(--light-bg);
+            color: var(--text);
             line-height: 1.6;
+            transition: 0.3s;
         }
 
         header {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         nav {
-            background: #34495e;
+            background: rgba(52, 73, 94, 0.85);
+            backdrop-filter: blur(10px);
             padding: 15px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         nav a {
             color: #ecf0f1;
-            margin: 0 15px;
+            margin: 0 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
             transition: 0.3s;
         }
 
-        nav a:hover {
-            color: #3498db;
+        nav a:hover { color: var(--primary); }
+
+        #theme-toggle {
+            cursor: pointer;
+            color: white;
+            margin-left: 20px;
+            font-size: 18px;
+            transition: 0.3s;
         }
 
-        section {
-            padding: 30px 20px;
-        }
+        section { padding: 50px 20px; }
 
         .card {
-            background: white;
+            background: var(--card-bg);
             padding: 30px;
             margin: 0 auto 30px auto;
-            border-radius: 15px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             max-width: 750px;
-            animation: fadeIn 0.8s ease;
         }
 
         .profile {
-            width: 160px;
-            height: 160px;
+            width: 160px; height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #3498db;
+            border: 5px solid var(--primary);
             transition: 0.5s;
         }
-        
-        .profile:hover {
-            transform: rotate(5deg) scale(1.05);
-        }
+        .profile:hover { transform: rotate(5deg) scale(1.05); }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
+        /* Timeline Style */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            border-left: 2px solid var(--timeline-line);
+            margin-left: 10px;
         }
-
-        table, th, td {
-            border: 1px solid #eee;
-            padding: 12px;
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
         }
-
-        th {
-            background: #3498db;
-            color: white;
-            text-align: left;
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 12px; height: 12px;
+            background: var(--primary);
+            border: 3px solid var(--card-bg);
+            border-radius: 50%;
         }
+        .timeline-date { font-weight: bold; color: var(--primary); font-size: 14px; }
 
+        /* Achievement & Contact */
         .achievement {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 12px;
-            background: #f8f9fa;
-            border-left: 5px solid #3498db;
-            transition: 0.3s;
-            cursor: pointer;
+            display: flex; align-items: flex-start; gap: 15px;
+            margin-bottom: 15px; padding: 15px;
+            border-radius: 12px; background: rgba(0,0,0,0.03);
+            border-left: 5px solid var(--primary);
+            transition: 0.3s; cursor: pointer;
         }
-
-        .achievement:hover {
-            background: #eef7ff;
-            transform: translateX(5px);
-        }
+        .achievement:hover { background: rgba(52, 152, 219, 0.1); transform: translateX(10px); }
 
         .contact a {
-            display: inline-block;
-            margin: 10px 0;
-            padding: 12px 25px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            background: #f1f3f5;
-            color: #2c3e50;
-            width: 85%;
-            max-width: 320px;
-            transition: 0.3s;
+            display: inline-block; margin: 10px 0; padding: 12px 25px;
+            border-radius: 12px; text-decoration: none; font-weight: bold;
+            background: rgba(0,0,0,0.05); color: var(--text);
+            width: 85%; max-width: 320px; transition: 0.3s;
         }
+        .contact a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
 
-        .contact a:hover {
-            background: #3498db;
-            color: white;
+        /* Floating WhatsApp */
+        .fab-whatsapp {
+            position: fixed; bottom: 25px; right: 25px;
+            background: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 999; text-decoration: none; transition: 0.3s;
         }
+        .fab-whatsapp:hover { transform: scale(1.1); }
 
-        /* --- PERBAIKAN MODAL --- */
+        /* Modal */
         .modal {
-            display: none; /* Sembunyi secara default */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9); /* Latar belakang lebih gelap */
-            
-            /* Gunakan Flexbox untuk mengetengahkan gambar secara vertikal & horizontal */
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            
-            cursor: pointer; /* Menandakan bisa diklik untuk menutup */
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); justify-content: center; align-items: center;
         }
-
         .modal img {
-            /* KUNCI PERBAIKAN: Membatasi tinggi agar tidak melebihi layar */
-            max-width: 90%;  /* Tidak boleh lebih lebar dari 90% layar */
-            max-height: 85vh; /* Tidak boleh lebih tinggi dari 85% tinggi layar (viewport height) */
-            
-            width: auto;  /* Biarkan lebar menyesuaikan proporsi */
-            height: auto; /* Biarkan tinggi menyesuaikan proporsi */
-
-            border: 5px solid white;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-            
-            /* Animasi zoom in saat dibuka */
+            max-width: 90%; max-height: 85vh;
+            border: 5px solid white; border-radius: 10px;
             animation: zoomIn 0.3s ease;
         }
 
-        @keyframes zoomIn {
-            from { transform: scale(0.7); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* --- SISA CSS --- */
+        footer { background: var(--dark); color: white; text-align: center; padding: 40px 20px; }
+
         @media (max-width: 600px) {
-            nav { padding: 10px; }
             nav a { margin: 0 5px; font-size: 11px; }
             .achievement { flex-direction: column; align-items: center; text-align: center; }
-            .profile { width: 130px; height: 130px; }
             header h1 { font-size: 24px; }
-            .modal img { max-width: 95%; max-height: 80vh; } /* Sesuaikan sedikit untuk HP */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
+<body class="light-theme">
 
 <header>
-    <h1>Portal Mahasiswa</h1>
-    <p>Profil Digital & Biodata</p>
+    <h1 data-aos="fade-down">Portal Mahasiswa</h1>
+    <p data-aos="fade-up">Profil Digital & Biodata Profesional</p>
 </header>
 
 <nav>
@@ -208,102 +197,137 @@
     <a href="#pendidikan">Pendidikan</a>
     <a href="#prestasi">Prestasi</a>
     <a href="#kontak">Kontak</a>
+    <i class="fa-solid fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
 </nav>
 
 <section id="profil">
-    <div class="card" style="text-align: center;">
+    <div class="card" style="text-align: center;" data-aos="zoom-in">
         <h2>Profil Mahasiswa</h2>
-        <img src="uploads/default.png" class="profile" alt="Jaidan Fikra Annabil"><br><br>
-        <h3 style="margin-bottom: 5px;">Jaidan Fikra Annabil</h3>
-        <p style="color: #7f8c8d; margin-top: 0;">NIM: 240705093</p>
+        <img src="uploads/default.png" class="profile" alt="Jaidan Fikra Annabil" loading="lazy">
+        <h3 style="margin: 15px 0 5px 0;">Jaidan Fikra Annabil</h3>
+        <p style="color: var(--primary); font-weight: bold; margin-top: 0;">NIM: 240705093</p>
         <p><b>Teknologi Informasi</b><br>UIN Ar-Raniry Banda Aceh</p>
     </div>
 </section>
 
 <section id="biodata">
-    <div class="card">
+    <div class="card" data-aos="fade-right">
         <h2>Biodata Lengkap</h2>
-        <table>
-            <tr><th width="40%">Data</th><th>Keterangan</th></tr>
-            <tr><td>Nama Lengkap</td><td>Jaidan Fikra Annabil</td></tr>
-            <tr><td>Tempat, Tanggal Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
-            <tr><td>Jenis Kelamin</td><td>Laki-laki</td></tr>
-            <tr><td>Alamat</td><td>Aceh, Indonesia</td></tr>
-            <tr><td>Status Mahasiswa</td><td>Aktif</td></tr>
+        <table style="width:100%; border-collapse: collapse; color: var(--text);">
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 12px; font-weight: 600;">TTL</td>
+                <td style="padding: 12px;">Aceh Singkil, 30 Mei 2006</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 12px; font-weight: 600;">Jenis Kelamin</td>
+                <td style="padding: 12px;">Laki-laki</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 12px; font-weight: 600;">Alamat</td>
+                <td style="padding: 12px;">Aceh, Indonesia</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; font-weight: 600;">Status</td>
+                <td style="padding: 12px;">Mahasiswa Aktif</td>
+            </tr>
         </table>
     </div>
 </section>
 
 <section id="pendidikan">
-    <div class="card">
+    <div class="card" data-aos="fade-left">
         <h2>Riwayat Pendidikan</h2>
-        <table>
-            <tr><th>Tahun</th><th>Institusi</th><th>Keterangan</th></tr>
-            <tr><td>2024 - Sekarang</td><td>UIN Ar-Raniry</td><td>S1 Teknologi Informasi</td></tr>
-            <tr><td>2021 - 2024</td><td>MAN 1 Aceh Singkil</td><td>MIPA</td></tr>
-            <tr><td>2018 - 2021</td><td>SMP Muhammadiyah Singkil</td><td>-</td></tr>
-            <tr><td>2012 - 2018</td><td>MIN 1 Aceh Singkil</td><td>-</td></tr>
-        </table>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2024 - Sekarang</div>
+                <div><b>UIN Ar-Raniry</b><br>S1 Teknologi Informasi</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2021 - 2024</div>
+                <div><b>MAN 1 Aceh Singkil</b><br>MIPA</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2018 - 2021</div>
+                <div><b>SMP Muhammadiyah Singkil</b></div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2012 - 2018</div>
+                <div><b>MIN 1 Aceh Singkil</b></div>
+            </div>
+        </div>
     </div>
 </section>
 
 <section id="prestasi">
-    <div class="card">
+    <div class="card" data-aos="flip-up">
         <h2>Prestasi & Pengalaman</h2>
         <div class="achievement" onclick="openModal('uploads/osn.jpg')">
-            <i class="fa-solid fa-trophy icon" style="font-size: 24px; color: #f1c40f;"></i>
+            <i class="fa-solid fa-trophy" style="font-size: 24px; color: #f1c40f;"></i>
             <div>
                 <b>Juara OSN Informatika 2023</b><br>
                 Tingkat Kabupaten Aceh Singkil.
             </div>
         </div>
         <div class="achievement" style="cursor: default; border-left-color: #2ecc71;">
-            <i class="fa-solid fa-award icon" style="font-size: 24px; color: #2ecc71;"></i>
+            <i class="fa-solid fa-award" style="font-size: 24px; color: #2ecc71;"></i>
             <div>
                 <b>Beasiswa ADik 2024</b><br>
-                Peserta lolos verifikasi administrasi.
+                Lolos verifikasi administrasi.
             </div>
         </div>
     </div>
 </section>
 
 <section id="kontak" style="text-align: center;">
-    <div class="card contact">
+    <div class="card contact" data-aos="fade-up">
         <h2>Hubungi Saya</h2>
         <a href="mailto:jaidanfikra@gmail.com">
-            <i class="fa-solid fa-envelope" style="margin-right: 10px;"></i> Email
-        </a><br>
-        <a href="https://wa.me/6282294290352" target="_blank">
-            <i class="fa-brands fa-whatsapp" style="margin-right: 10px;"></i> WhatsApp
+            <i class="fa-solid fa-envelope"></i> Email
         </a><br>
         <a href="https://instagram.com/jaidanfikraannabil" target="_blank">
-            <i class="fa-brands fa-instagram" style="margin-right: 10px;"></i> Instagram
+            <i class="fa-brands fa-instagram"></i> Instagram
         </a>
     </div>
 </section>
 
-<footer style="background: #2c3e50; color: white; text-align: center; padding: 30px 20px;">
-    <p style="margin: 0;">© 2026 Portal Mahasiswa | Jaidan Fikra Annabil</p>
+<a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank" title="Chat WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<footer>
+    <p>© 2026 Jaidan Fikra Annabil | Portal Mahasiswa</p>
+    <small>Built with Passion in Aceh</small>
 </footer>
 
 <div id="modal" class="modal" onclick="closeModal()">
     <img id="modal-img" alt="Sertifikat">
 </div>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-// Fungsi untuk membuka modal
-function openModal(src) {
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modal-img");
-    
-    modal.style.display = "flex"; // Gunakan flex agar centering bekerja
-    modalImg.src = src; // Set sumber gambar
-}
+    AOS.init({ duration: 1000, once: true });
 
-// Fungsi untuk menutup modal
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("theme-toggle");
+        body.classList.toggle("dark-theme");
+        if (body.classList.contains("dark-theme")) {
+            icon.classList.replace("fa-moon", "fa-sun");
+        } else {
+            icon.classList.replace("fa-sun", "fa-moon");
+        }
+    }
+
+    function openModal(src) {
+        const modal = document.getElementById("modal");
+        const modalImg = document.getElementById("modal-img");
+        modal.style.display = "flex";
+        modalImg.src = src;
+    }
+
+    function closeModal() {
+        document.getElementById("modal").style.display = "none";
+    }
 </script>
 
 </body>
