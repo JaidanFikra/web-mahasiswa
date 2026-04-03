@@ -9,324 +9,353 @@
     <meta name="author" content="Jaidan Fikra Annabil">
 
     <link rel="icon" type="image/png" href="uploads/default.png">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
             --primary: #3498db;
+            --primary-dark: #2980b9;
+            --accent: #e74c3c;
             --dark: #2c3e50;
-            --light-bg: #f5f7fa;
-            --card-bg: #ffffff;
-            --text: #333;
-            --timeline-line: #ddd;
+            --light-bg: #f0f4f8;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text: #2d3436;
+            --timeline-line: #dfe6e9;
         }
 
         body.dark-theme {
-            --light-bg: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --text: #f5f5f5;
-            --dark: #121212;
-            --timeline-line: #444;
+            --light-bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --text: #f1f5f9;
+            --dark: #020617;
+            --timeline-line: #334155;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
+        /* --- 1. WELCOME SCREEN (MODERN BLUR) --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .welcome-content {
+            text-align: center; color: white; opacity: 0;
+            transform: translateY(20px); animation: welcomeFadeIn 0.8s ease forwards;
+        }
+
+        .welcome-profile {
+            width: 130px; height: 130px; border-radius: 50%;
+            object-fit: cover; border: 4px solid var(--primary);
+            box-shadow: 0 0 30px rgba(52, 152, 219, 0.5); margin-bottom: 20px;
+        }
+
+        .welcome-name {
+            font-size: 2.5rem; font-weight: 700; margin: 0; letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes welcomeFadeIn { to { opacity: 1; transform: translateY(0); } }
+        .fade-out { opacity: 0 !important; visibility: hidden !important; transform: scale(1.1) !important; }
+
+        /* --- 2. BASE STYLES --- */
+        * { box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--light-bg); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            background: var(--light-bg);
-            color: var(--text);
-            line-height: 1.6;
-            transition: 0.3s;
+            margin: 0; background: var(--light-bg); color: var(--text);
+            line-height: 1.8; transition: background 0.4s ease; overflow: hidden;
         }
 
+        main { opacity: 0; transition: opacity 1s ease; }
+        body.loaded main { opacity: 1; }
+
+        /* --- 3. HEADER & NAV --- */
         header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
+            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
+            color: white; padding: 120px 20px; text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
         }
 
         nav {
-            background: rgba(52, 73, 94, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 15px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: var(--card-bg); backdrop-filter: blur(15px);
+            padding: 15px; position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         nav a {
-            color: #ecf0f1;
-            margin: 0 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: 0.3s;
+            color: var(--text); margin: 0 15px; text-decoration: none;
+            font-weight: 500; font-size: 14px; position: relative;
+            padding: 5px 0; transition: 0.3s;
         }
 
-        nav a:hover { color: var(--primary); }
-
-        #theme-toggle {
-            cursor: pointer;
-            color: white;
-            margin-left: 20px;
-            font-size: 18px;
-            transition: 0.3s;
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background: var(--primary);
+            transition: width 0.3s;
         }
 
-        section { padding: 50px 20px; }
+        nav a:hover::after, nav a.active::after { width: 100%; }
+        nav a.active { color: var(--primary); }
+
+        #theme-toggle { cursor: pointer; margin-left: 25px; font-size: 20px; color: var(--primary); transition: 0.3s; }
+        #theme-toggle:hover { transform: rotate(15deg) scale(1.2); }
+
+        /* --- 4. CARDS & SECTIONS --- */
+        section { padding: 100px 20px; max-width: 900px; margin: 0 auto; }
 
         .card {
-            background: var(--card-bg);
-            padding: 30px;
-            margin: 0 auto 30px auto;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 750px;
+            background: var(--card-bg); padding: 40px; border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+
+        .section-title {
+            text-align: center; margin-bottom: 50px; font-weight: 700;
+            font-size: 2rem; color: var(--primary);
         }
 
-        .profile {
-            width: 160px; height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--primary);
-            transition: 0.5s;
+        .profile-img {
+            width: 180px; height: 180px; border-radius: 30px;
+            object-fit: cover; border: 4px solid var(--primary);
+            transform: rotate(-3deg); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .profile:hover { transform: rotate(5deg) scale(1.05); }
+        .profile-img:hover { transform: rotate(0deg) scale(1.1); }
 
-        /* Timeline Style */
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-            border-left: 2px solid var(--timeline-line);
-            margin-left: 10px;
+        /* --- 5. TIMELINE & ACHIEVEMENTS --- */
+        .timeline { position: relative; padding-left: 40px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0;
+            height: 100%; width: 3px; background: var(--timeline-line);
         }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-        }
+
+        .timeline-item { position: relative; margin-bottom: 40px; }
         .timeline-item::before {
-            content: "";
-            position: absolute;
-            left: -37px;
-            top: 5px;
-            width: 12px; height: 12px;
-            background: var(--primary);
-            border: 3px solid var(--card-bg);
-            border-radius: 50%;
+            content: ''; position: absolute; left: -46px; top: 8px;
+            width: 15px; height: 15px; background: var(--primary);
+            border: 4px solid var(--card-bg); border-radius: 50%;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
         }
-        .timeline-date { font-weight: bold; color: var(--primary); font-size: 14px; }
 
-        /* Achievement & Contact */
         .achievement {
-            display: flex; align-items: flex-start; gap: 15px;
-            margin-bottom: 15px; padding: 15px;
-            border-radius: 12px; background: rgba(0,0,0,0.03);
-            border-left: 5px solid var(--primary);
-            transition: 0.3s; cursor: pointer;
+            display: flex; align-items: center; gap: 20px;
+            padding: 20px; border-radius: 18px; background: rgba(52, 152, 219, 0.05);
+            margin-bottom: 20px; transition: 0.3s; border: 1px solid transparent;
         }
-        .achievement:hover { background: rgba(52, 152, 219, 0.1); transform: translateX(10px); }
-
-        .contact a {
-            display: inline-block; margin: 10px 0; padding: 12px 25px;
-            border-radius: 12px; text-decoration: none; font-weight: bold;
-            background: rgba(0,0,0,0.05); color: var(--text);
-            width: 85%; max-width: 320px; transition: 0.3s;
+        .achievement:hover {
+            background: rgba(52, 152, 219, 0.1);
+            border-color: var(--primary);
+            padding-left: 30px;
         }
-        .contact a:hover { background: var(--primary); color: white; transform: translateY(-3px); }
 
-        /* Floating WhatsApp */
+        /* --- 6. MODAL & CONTACT --- */
+        .modal {
+            display: none; position: fixed; z-index: 10000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px);
+            justify-content: center; align-items: center;
+        }
+        .modal img { max-width: 90%; max-height: 80vh; border-radius: 15px; animation: zoom 0.4s; }
+
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .contact-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 15px; border-radius: 15px; text-decoration: none;
+            background: var(--primary); color: white; font-weight: 600; transition: 0.3s;
+        }
+        .contact-btn:hover { background: var(--primary-dark); transform: scale(1.05); }
+
         .fab-whatsapp {
-            position: fixed; bottom: 25px; right: 25px;
-            background: #25d366; color: white;
-            width: 60px; height: 60px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: fixed; bottom: 30px; right: 30px;
+            background: #25d366; color: white; width: 60px; height: 60px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 30px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
             z-index: 999; text-decoration: none; transition: 0.3s;
         }
-        .fab-whatsapp:hover { transform: scale(1.1); }
+        .fab-whatsapp:hover { transform: translateY(-5px) rotate(10deg); }
 
-        /* Modal */
-        .modal {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); justify-content: center; align-items: center;
-        }
-        .modal img {
-            max-width: 90%; max-height: 85vh;
-            border: 5px solid white; border-radius: 10px;
-            animation: zoomIn 0.3s ease;
-        }
-
-        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        footer { background: var(--dark); color: white; text-align: center; padding: 40px 20px; }
+        footer { padding: 60px 20px; text-align: center; color: var(--text); opacity: 0.7; font-size: 14px; }
 
         @media (max-width: 600px) {
-            nav a { margin: 0 5px; font-size: 11px; }
-            .achievement { flex-direction: column; align-items: center; text-align: center; }
-            header h1 { font-size: 24px; }
+            header { padding: 80px 20px; }
+            .welcome-name { font-size: 1.8rem; }
+            nav { padding: 10px; overflow-x: auto; justify-content: flex-start; }
+            nav a { margin: 0 10px; font-size: 12px; flex-shrink: 0; }
+            .card { padding: 25px; }
         }
     </style>
 </head>
 <body class="light-theme">
 
-<header>
-    <h1 data-aos="fade-down">Portal Mahasiswa</h1>
-    <p data-aos="fade-up">Profil Digital & Biodata</p>
-</header>
-
-<nav>
-    <a href="#profil">Profil</a>
-    <a href="#biodata">Biodata</a>
-    <a href="#pendidikan">Pendidikan</a>
-    <a href="#prestasi">Prestasi</a>
-    <a href="#kontak">Kontak</a>
-    <i class="fa-solid fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
-</nav>
-
-<section id="profil">
-    <div class="card" style="text-align: center;" data-aos="zoom-in">
-        <h2>Profil Mahasiswa</h2>
-        <img src="uploads/default.png" class="profile" alt="Jaidan Fikra Annabil" loading="lazy">
-        <h3 style="margin: 15px 0 5px 0;">Jaidan Fikra Annabil</h3>
-        <p style="color: var(--primary); font-weight: bold; margin-top: 0;">NIM: 240705093</p>
-        <p><b>Teknologi Informasi</b><br>UIN Ar-Raniry Banda Aceh</p>
-    </div>
-</section>
-
-<section id="biodata">
-    <div class="card" data-aos="fade-right">
-        <h2>Biodata Lengkap</h2>
-        <table style="width:100%; border-collapse: collapse; color: var(--text);">
-            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
-                <td style="padding: 12px; font-weight: 600;">TTL</td>
-                <td style="padding: 12px;">Aceh Singkil, 30 Mei 2006</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
-                <td style="padding: 12px; font-weight: 600;">Jenis Kelamin</td>
-                <td style="padding: 12px;">Laki-laki</td>
-            </tr>
-            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
-                <td style="padding: 12px; font-weight: 600;">Alamat</td>
-                <td style="padding: 12px;">Aceh, Indonesia</td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; font-weight: 600;">Status</td>
-                <td style="padding: 12px;">Mahasiswa Aktif</td>
-            </tr>
-        </table>
-    </div>
-</section>
-
-<section id="pendidikan">
-    <div class="card" data-aos="fade-left">
-        <h2>Riwayat Pendidikan</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">2024 - Sekarang</div>
-                <div><b>UIN Ar-Raniry</b><br>S1 Teknologi Informasi</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2021 - 2024</div>
-                <div><b>MAN 1 Aceh Singkil</b><br>MIPA</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2018 - 2021</div>
-                <div><b>SMP Muhammadiyah Singkil</b></div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2012 - 2018</div>
-                <div><b>MIN 1 Aceh Singkil</b></div>
-            </div>
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <img src="uploads/default.png" alt="Profile" class="welcome-profile">
+            <h1 class="welcome-name">Jaidan Fikra Annabil</h1>
+            <p style="color:white; opacity:0.7; font-weight: 300;">Profil - Portal Mahasiswa </p>
         </div>
     </div>
-</section>
 
-<section id="prestasi">
-    <div class="card" data-aos="flip-up">
-        <h2>Prestasi & Pengalaman</h2>
-        <div class="achievement" onclick="openModal('uploads/osn.jpg')">
-            <i class="fa-solid fa-trophy" style="font-size: 24px; color: #f1c40f;"></i>
-            <div>
-                <b>Juara OSN Informatika 2023</b><br>
-                Tingkat Kabupaten Aceh Singkil.
-            </div>
-        </div>
-        <div class="achievement" style="cursor: default; border-left-color: #2ecc71;">
-            <i class="fa-solid fa-award" style="font-size: 24px; color: #2ecc71;"></i>
-            <div>
-                <b>Beasiswa ADik 2024</b><br>
-                Lolos verifikasi administrasi.
-            </div>
-        </div>
-    </div>
-</section>
+    <main>
+        <header>
+            <h1 data-aos="fade-down" style="font-size: 2.5rem; margin-bottom: 10px;">Profil Digital</h1>
+            <p data-aos="fade-up" style="font-weight: 300; opacity: 0.9;">Crafting solutions through Information Technology</p>
+        </header>
 
-<section id="kontak" style="text-align: center;">
-    <div class="card contact" data-aos="fade-up">
-        <h2>Hubungi Saya</h2>
-        <a href="mailto:jaidanfikra@gmail.com">
-            <i class="fa-solid fa-envelope"></i> Email
-        </a><br>
-        <a href="https://instagram.com/jaidanfikraannabil" target="_blank">
-            <i class="fa-brands fa-instagram"></i> Instagram
+        <nav id="main-nav">
+            <a href="#profil" class="nav-link">Profil</a>
+            <a href="#biodata" class="nav-link">Biodata</a>
+            <a href="#pendidikan" class="nav-link">Pendidikan</a>
+            <a href="#prestasi" class="nav-link">Prestasi</a>
+            <a href="#kontak" class="nav-link">Kontak</a>
+            <i class="fa-solid fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
+        </nav>
+
+        <section id="profil">
+            <div class="card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px;" data-aos="fade-up">
+                <img src="uploads/default.png" class="profile-img" alt="Jaidan Fikra Annabil">
+                <div style="flex: 1; min-width: 250px;">
+                    <h2 style="margin-top: 0; color: var(--primary);">Halo, Saya Jaidan.</h2>
+                    <p>Mahasiswa Teknologi Informasi di <b>UIN Ar-Raniry</b> yang berfokus pada pengembangan solusi digital dan inovasi teknologi masa depan.</p>
+                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">NIM: 240705093</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="biodata">
+            <h2 class="section-title" data-aos="fade-up">Personal Detail</h2>
+            <div class="card" data-aos="fade-up">
+                <table style="width: 100%;">
+                    <tr><td>Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
+                    <tr><td>Jenis Kelamin</td><td>Laki-laki</td></tr>
+                    <tr><td>Alamat</td><td>Aceh, Indonesia</td></tr>
+                    <tr><td>status</td><td>Mahasiswa Aktif</td></tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="pendidikan">
+            <h2 class="section-title" data-aos="fade-up">Riwayat Pendidikan</h2>
+            <div class="card" data-aos="fade-up">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024 - sekarang</div>
+                        <b>UIN Ar-Raniry Banda Aceh</b><br>S1 Teknologi Informasi
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2021 - 2024</div>
+                        <b>MAN 1 Aceh Singkil</b><br>MIPA
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2018 - 2021</div>
+                        <b>SMP Muhammadiyah Singkil</b>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="prestasi">
+            <h2 class="section-title" data-aos="fade-up">Prestasi</h2>
+            <div class="card" data-aos="fade-up">
+                <div class="achievement" onclick="openModal('uploads/osn.jpg')">
+                    <i class="fa-solid fa-medal" style="font-size: 30px; color: #f1c40f;"></i>
+                    <div>
+                        <b style="font-size: 1.1rem;">Juara OSN Informatika 2023</b><br>
+                        <span style="opacity: 0.8; font-size: 0.9rem;">Klik untuk lihat Sertifikat</span>
+                    </div>
+                </div>
+                <div class="achievement" >
+                    <i class="fa-solid fa-certificate" style="font-size: 30px; color: #2ecc71;"></i>
+                    <div>
+                        <b style="font-size: 1.1rem;">Penerima Beasiswa ADik 2024</b><br>
+                        <span style="opacity: 0.8; font-size: 0.9rem;">Program Afirmasi Pendidikan Tinggi</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontak">
+            <h2 class="section-title" data-aos="fade-up">Kontak</h2>
+            <div class="card contact-grid" data-aos="fade-up">
+                <a href="mailto:jaidanfikra@gmail.com" class="contact-btn">
+                    <i class="fa-solid fa-envelope"></i> Email
+                </a>
+                <a href="https://instagram.com/jaidanfikraannabil" target="_blank" class="contact-btn" style="background: #e1306c;">
+                    <i class="fa-brands fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </section>
+
+        <a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i>
         </a>
+
+        <footer>
+            <p>© 2026 Profil - Jaidan Fikra Annabil</p>
+        </footer>
+    </main>
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="Certificate View">
     </div>
-</section>
-
-<a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank" title="Chat WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-</a>
-
-<footer>
-    <p>© 2026 Jaidan Fikra Annabil | Portal Mahasiswa</p>
-</footer>
-
-<div id="modal" class="modal" onclick="closeModal()">
-    <img id="modal-img" alt="Sertifikat">
-</div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 1000, once: true });
+    // Loader Logic (1.2 Detik)
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('welcome-screen').classList.add('fade-out');
+            document.body.style.overflow = 'auto';
+            document.body.classList.add('loaded');
+            AOS.init({ duration: 1000, once: false });
+        }, 1200);
+    });
 
+    // Theme Switcher
     function toggleTheme() {
         const body = document.body;
         const icon = document.getElementById("theme-toggle");
         body.classList.toggle("dark-theme");
-        if (body.classList.contains("dark-theme")) {
-            icon.classList.replace("fa-moon", "fa-sun");
-        } else {
-            icon.classList.replace("fa-sun", "fa-moon");
-        }
+        icon.classList.toggle("fa-sun");
+        icon.classList.toggle("fa-moon");
     }
 
+    // Modal Control
     function openModal(src) {
         const modal = document.getElementById("modal");
         const modalImg = document.getElementById("modal-img");
         modal.style.display = "flex";
         modalImg.src = src;
+        document.body.style.overflow = "hidden";
     }
 
     function closeModal() {
         document.getElementById("modal").style.display = "none";
+        document.body.style.overflow = "auto";
     }
+
+    // ScrollSpy
+    window.addEventListener("scroll", () => {
+        let current = "";
+        document.querySelectorAll("section").forEach(s => {
+            if (pageYOffset >= s.offsetTop - 200) current = s.getAttribute("id");
+        });
+        document.querySelectorAll(".nav-link").forEach(l => {
+            l.classList.remove("active");
+            if (l.getAttribute("href").includes(current)) l.classList.add("active");
+        });
+    });
 </script>
 
 </body>
