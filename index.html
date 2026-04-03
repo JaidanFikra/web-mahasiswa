@@ -9,16 +9,10 @@
     <meta name="author" content="Jaidan Fikra Annabil">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jaidanfikra.github.io/web-mahasiswa/"> <meta property="og:title" content="Jaidan Fikra Annabil | Portal Mahasiswa IT">
+    <meta property="og:url" content="https://jaidanfikra.github.io/web-mahasiswa/"> 
+    <meta property="og:title" content="Jaidan Fikra Annabil | Portal Mahasiswa IT">
     <meta property="og:description" content="Halo! Saya Jaidan, Mahasiswa IT UIN Ar-Raniry. Lihat profil digital dan riwayat pendidikan saya di sini.">
     <meta property="og:image" content="https://jaidanfikra.github.io/web-mahasiswa/uploads/default.png"> 
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Jaidan Fikra Annabil | Portal Mahasiswa IT">
-    <meta property="twitter:description" content="Profil Digital Jaidan Fikra Annabil - Mahasiswa IT UIN Ar-Raniry.">
-    <meta property="twitter:image" content="https://jaidanfikra.github.io/web-mahasiswa/uploads/default.png">
 
     <link rel="icon" type="image/png" href="uploads/default.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,12 +23,12 @@
         :root {
             --primary: #3498db;
             --primary-dark: #2980b9;
-            --accent: #e74c3c;
             --dark: #2c3e50;
             --light-bg: #f0f4f8;
             --card-bg: rgba(255, 255, 255, 0.95);
             --text: #2d3436;
             --timeline-line: #dfe6e9;
+            --wa-green: #25d366;
         }
 
         body.dark-theme {
@@ -47,122 +41,93 @@
 
         /* --- 1. WELCOME SCREEN --- */
         #welcome-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dark);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark); display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: 0.8s;
         }
-
-        .welcome-content {
-            text-align: center; color: white; opacity: 0;
-            transform: translateY(20px); animation: welcomeFadeIn 0.8s ease forwards;
-        }
-
-        .welcome-profile {
-            width: 130px; height: 130px; border-radius: 50%;
-            object-fit: cover; border: 4px solid var(--primary);
-            box-shadow: 0 0 30px rgba(52, 152, 219, 0.5); margin-bottom: 20px;
-        }
-
-        .welcome-name {
-            font-size: 2.5rem; font-weight: 700; margin: 0; letter-spacing: -1px;
-            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
+        .welcome-content { text-align: center; color: white; opacity: 0; transform: translateY(20px); animation: welcomeFadeIn 0.8s ease forwards; }
+        .welcome-profile { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin-bottom: 20px; }
+        .welcome-name { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         @keyframes welcomeFadeIn { to { opacity: 1; transform: translateY(0); } }
-        .fade-out { opacity: 0 !important; visibility: hidden !important; transform: scale(1.1) !important; }
+        .fade-out { opacity: 0 !important; visibility: hidden !important; }
 
         /* --- 2. BASE STYLES --- */
         * { box-sizing: border-box; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0; background: var(--light-bg); color: var(--text);
-            line-height: 1.8; transition: background 0.4s ease; overflow: hidden;
-        }
-
-        main { opacity: 0; transition: opacity 1s ease; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--light-bg); color: var(--text); overflow-x: hidden; }
+        main { opacity: 0; transition: 1s; }
         body.loaded main { opacity: 1; }
 
         /* --- 3. HEADER & NAV --- */
-        header {
-            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
-            color: white; padding: 120px 20px; text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+        header { background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%); color: white; padding: 120px 20px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%); }
+        
+        nav { 
+            background: var(--card-bg); backdrop-filter: blur(15px); padding: 15px; 
+            position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; align-items: center; 
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05); 
         }
+        nav a { color: var(--text); margin: 0 15px; text-decoration: none; font-weight: 500; font-size: 14px; position: relative; transition: 0.3s; }
+        nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--primary); transition: 0.3s; }
+        nav a.active { color: var(--primary); font-weight: 700; }
+        nav a.active::after { width: 100%; }
 
-        nav {
-            background: var(--card-bg); backdrop-filter: blur(15px);
-            padding: 15px; position: sticky; top: 0; z-index: 100;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
-        }
+        #theme-toggle { cursor: pointer; margin-left: 20px; font-size: 20px; color: var(--primary); }
 
-        nav a {
-            color: var(--text); margin: 0 15px; text-decoration: none;
-            font-weight: 500; font-size: 14px; position: relative;
-            transition: 0.3s;
-        }
-
-        nav a.active { color: var(--primary); }
-        nav a::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: 0; left: 0; background: var(--primary); transition: 0.3s;
-        }
-        nav a:hover::after, nav a.active::after { width: 100%; }
-
-        #theme-toggle { cursor: pointer; margin-left: 25px; font-size: 20px; color: var(--primary); transition: 0.3s; }
-
-        /* --- 4. CARDS --- */
+        /* --- 4. CARDS & SECTIONS --- */
         section { padding: 100px 20px; max-width: 900px; margin: 0 auto; }
-        .card {
-            background: var(--card-bg); padding: 40px; border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid rgba(255,255,255,0.1);
-        }
+        .card { background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
         .section-title { text-align: center; margin-bottom: 50px; font-weight: 700; font-size: 2rem; color: var(--primary); }
+        .profile-img { width: 180px; height: 180px; border-radius: 30px; object-fit: cover; border: 4px solid var(--primary); transform: rotate(-3deg); }
 
-        .profile-img {
-            width: 180px; height: 180px; border-radius: 30px;
-            object-fit: cover; border: 4px solid var(--primary); transform: rotate(-3deg);
-        }
-
-        /* --- 5. TIMELINE & ACHIEVEMENT --- */
+        /* --- 5. TIMELINE & PRESTASI --- */
         .timeline { position: relative; padding-left: 40px; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--timeline-line); }
         .timeline-item { position: relative; margin-bottom: 40px; }
-        .timeline-item::before {
-            content: ''; position: absolute; left: -46px; top: 8px; width: 15px; height: 15px;
-            background: var(--primary); border: 4px solid var(--card-bg); border-radius: 50%;
-        }
+        .timeline-item::before { content: ''; position: absolute; left: -47.5px; top: 8px; width: 12px; height: 12px; background: var(--primary); border: 4px solid var(--card-bg); border-radius: 50%; }
 
-        .achievement {
-            display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 18px;
-            background: rgba(52, 152, 219, 0.05); cursor: pointer; transition: 0.3s;
-        }
-        .achievement:hover { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--primary); }
+        .achievement { display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 18px; background: rgba(52, 152, 219, 0.05); cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
+        .achievement:hover { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--primary); transform: translateY(-3px); }
 
-        /* --- 6. MODAL & FAB --- */
-        .modal {
-            display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center;
-        }
-        .modal img { max-width: 90%; max-height: 80vh; border-radius: 15px; }
+        /* --- 6. MODAL --- */
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; padding: 20px; }
+        .modal img { max-width: 100%; max-height: 80vh; border-radius: 10px; }
 
-        .contact-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 15px; border-radius: 15px; text-decoration: none;
-            background: var(--primary); color: white; font-weight: 600;
-        }
+        .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; background: var(--primary); color: white; font-weight: 600; transition: 0.3s; }
+        .contact-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
+        /* --- 7. NEW WHATSAPP FAB --- */
         .fab-whatsapp {
-            position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white;
-            width: 60px; height: 60px; border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; font-size: 30px; z-index: 999;
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--wa-green); color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 32px; z-index: 999;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            text-decoration: none; transition: all 0.3s ease;
+        }
+        .fab-whatsapp::before {
+            content: ""; position: absolute; width: 100%; height: 100%;
+            background: var(--wa-green); border-radius: 50%;
+            z-index: -1; animation: pulse-green 2s infinite;
+        }
+        .fab-whatsapp:hover { transform: scale(1.1) rotate(10deg); background: #20ba5a; color: white; }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* --- 8. MOBILE FIX --- */
+        @media (max-width: 768px) {
+            header { padding: 80px 20px; }
+            nav { overflow-x: auto; justify-content: flex-start; padding: 15px 10px; }
+            nav a { margin: 0 10px; font-size: 13px; white-space: nowrap; }
+            .card { padding: 25px; }
+            #profil .card { flex-direction: column; text-align: center; gap: 20px !important; }
+            .profile-img { transform: rotate(0); width: 150px; height: 150px; }
+            table tr td { display: block; width: 100% !important; padding: 5px 0; }
+            #kontak .card { grid-template-columns: 1fr !important; gap: 15px !important; display: flex; flex-direction: column; }
         }
     </style>
 </head>
@@ -172,7 +137,7 @@
         <div class="welcome-content">
             <img src="uploads/default.png" alt="Profile" class="welcome-profile">
             <h1 class="welcome-name">Jaidan Fikra Annabil</h1>
-            <p style="color:white; opacity:0.7; font-weight: 300;">Profil - Portal Mahasiswa</p>
+            <p>Profil - Portal Mahasiswa</p>
         </div>
     </div>
 
@@ -195,7 +160,7 @@
             <div class="card" style="display: flex; flex-wrap: wrap; align-items: center; gap: 40px;" data-aos="fade-up">
                 <img src="uploads/default.png" class="profile-img" alt="Jaidan Fikra Annabil">
                 <div style="flex: 1; min-width: 250px;">
-                    <h2 style="color: var(--primary);">Halo, Saya Jaidan.</h2>
+                    <h2 style="color: var(--primary); margin-top:0;">Halo, Saya Jaidan.</h2>
                     <p>Mahasiswa Teknologi Informasi di <b>UIN Ar-Raniry</b> yang berfokus pada pengembangan solusi digital.</p>
                     <div style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">NIM: 240705093</div>
                 </div>
@@ -206,10 +171,10 @@
             <h2 class="section-title" data-aos="fade-up">Personal Detail</h2>
             <div class="card" data-aos="fade-up">
                 <table style="width: 100%;">
-                    <tr><td>Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
-                    <tr><td>Jenis Kelamin</td><td>Laki-laki</td></tr>
-                    <tr><td>Alamat</td><td>Aceh, Indonesia</td></tr>
-                    <tr><td>Status</td><td>Mahasiswa Aktif</td></tr>
+                    <tr><td style="width: 40%; font-weight:600; padding:10px 0;">Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
+                    <tr><td style="font-weight:600; padding:10px 0;">Jenis Kelamin</td><td>Laki-laki</td></tr>
+                    <tr><td style="font-weight:600; padding:10px 0;">Alamat</td><td>Aceh, Indonesia</td></tr>
+                    <tr><td style="font-weight:600; padding:10px 0;">Status</td><td>Mahasiswa Aktif</td></tr>
                 </table>
             </div>
         </section>
@@ -224,20 +189,33 @@
                     <div class="timeline-item">
                         <b>MAN 1 Aceh Singkil</b><br>MIPA (2021 - 2024)
                     </div>
+                    <div class="timeline-item">
+                        <b>SMP Muhammadiyah Singkil</b><br>(2018 - 2021)
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="prestasi">
-            <h2 class="section-title" data-aos="fade-up">Prestasi</h2>
-            <div class="card" data-aos="fade-up">
+            <h2 class="section-title" data-aos="fade-up">Prestasi & Beasiswa</h2>
+            <div class="card" data-aos="fade-up" style="display: flex; flex-direction: column; gap: 20px;">
+                
                 <div class="achievement" onclick="openModal('uploads/osn.jpg')">
                     <i class="fa-solid fa-medal" style="color: #f1c40f; font-size: 30px;"></i>
                     <div>
                         <b>Juara OSN Informatika 2023</b><br>
-                        <span style="opacity: 0.7;">Klik untuk lihat Sertifikat</span>
+                        <span style="opacity: 0.7; font-size: 0.9rem;">Klik untuk lihat Sertifikat</span>
                     </div>
                 </div>
+
+                <div class="achievement" onclick="openModal('uploads/beasiswa-adik.jpg')">
+                    <i class="fa-solid fa-graduation-cap" style="color: #2ecc71; font-size: 30px;"></i>
+                    <div>
+                        <b>Penerima Beasiswa ADik 2024</b><br>
+                        <span style="opacity: 0.7; font-size: 0.9rem;">Program Afirmasi Pendidikan Tinggi</span>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -245,14 +223,16 @@
             <h2 class="section-title" data-aos="fade-up">Kontak</h2>
             <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" data-aos="fade-up">
                 <a href="mailto:jaidanfikra@gmail.com" class="contact-btn"><i class="fa-solid fa-envelope"></i> Email</a>
-                <a href="https://instagram.com/jaidanfikraannabil" target="_blank" class="contact-btn" style="background:#e1306c;"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://instagram.com/jaidanfikraannabil" target="_blank" rel="noopener noreferrer" class="contact-btn" style="background:#e1306c;"><i class="fa-brands fa-instagram"></i> Instagram</a>
             </div>
         </section>
 
-        <a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" title="Hubungi saya di WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
 
         <footer>
-            <p>© 2026 Profil - Jaidan Fikra Annabil</p>
+            <p style="text-align: center; opacity: 0.6; padding: 40px 0;">© 2026 Profil - Jaidan Fikra Annabil</p>
         </footer>
     </main>
 
@@ -262,24 +242,24 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Loader
+        // 1. Loader Logic
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.getElementById('welcome-screen').classList.add('fade-out');
                 document.body.style.overflow = 'auto';
                 document.body.classList.add('loaded');
-                AOS.init({ duration: 1000 });
+                AOS.init({ duration: 1000, once: true });
             }, 1200);
         });
 
-        // Theme Switcher
+        // 2. Theme Toggle
         function toggleTheme() {
             document.body.classList.toggle("dark-theme");
             const icon = document.getElementById("theme-toggle");
             icon.classList.toggle("fa-sun"); icon.classList.toggle("fa-moon");
         }
 
-        // Modal
+        // 3. Modal Logic (PRESTASI)
         function openModal(src) {
             document.getElementById("modal-img").src = src;
             document.getElementById("modal").style.display = "flex";
@@ -290,15 +270,24 @@
             document.body.style.overflow = "auto";
         }
 
-        // ScrollSpy
+        // 4. Scrollspy (Bar Aktif)
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
+
         window.addEventListener("scroll", () => {
             let current = "";
-            document.querySelectorAll("section").forEach(s => {
-                if (pageYOffset >= s.offsetTop - 200) current = s.getAttribute("id");
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute("id");
+                }
             });
-            document.querySelectorAll(".nav-link").forEach(l => {
-                l.classList.remove("active");
-                if (l.getAttribute("href").includes(current)) l.classList.add("active");
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
             });
         });
     </script>
