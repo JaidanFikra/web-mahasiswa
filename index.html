@@ -31,12 +31,26 @@
             --wa-green: #25d366;
         }
 
+        /* --- PERBAIKAN NIGHT MODE --- */
         body.dark-theme {
             --light-bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.95);
+            --card-bg: #1e293b; /* Lebih solid agar kontras di HP */
             --text: #f1f5f9;
             --dark: #020617;
             --timeline-line: #334155;
+        }
+
+        /* Pastikan semua teks elemen mengikuti variabel warna */
+        body.dark-theme table, 
+        body.dark-theme table td,
+        body.dark-theme .timeline-item,
+        body.dark-theme #profil p,
+        body.dark-theme .achievement div {
+            color: var(--text);
+        }
+
+        body.dark-theme .achievement span {
+            color: #94a3b8; /* Warna abu terang untuk sub-teks */
         }
 
         /* --- 1. WELCOME SCREEN --- */
@@ -54,7 +68,7 @@
         /* --- 2. BASE STYLES --- */
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--light-bg); color: var(--text); overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--light-bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         main { opacity: 0; transition: 1s; }
         body.loaded main { opacity: 1; }
 
@@ -62,7 +76,7 @@
         header { background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%); color: white; padding: 120px 20px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%); }
         
         nav { 
-            background: var(--card-bg); backdrop-filter: blur(15px); padding: 15px; 
+            background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 15px; 
             position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; align-items: center; 
             box-shadow: 0 4px 30px rgba(0,0,0,0.05); 
         }
@@ -71,11 +85,11 @@
         nav a.active { color: var(--primary); font-weight: 700; }
         nav a.active::after { width: 100%; }
 
-        #theme-toggle { cursor: pointer; margin-left: 20px; font-size: 20px; color: var(--primary); }
+        #theme-toggle { cursor: pointer; margin-left: 20px; font-size: 20px; color: var(--primary); transition: 0.3s; }
 
         /* --- 4. CARDS & SECTIONS --- */
         section { padding: 100px 20px; max-width: 900px; margin: 0 auto; }
-        .card { background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .card { background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); transition: background 0.3s; }
         .section-title { text-align: center; margin-bottom: 50px; font-weight: 700; font-size: 2rem; color: var(--primary); }
         .profile-img { width: 180px; height: 180px; border-radius: 30px; object-fit: cover; border: 4px solid var(--primary); transform: rotate(-3deg); }
 
@@ -83,7 +97,7 @@
         .timeline { position: relative; padding-left: 40px; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--timeline-line); }
         .timeline-item { position: relative; margin-bottom: 40px; }
-        .timeline-item::before { content: ''; position: absolute; left: -47.5px; top: 8px; width: 12px; height: 12px; background: var(--primary); border: 4px solid var(--card-bg); border-radius: 50%; }
+        .timeline-item::before { content: ''; position: absolute; left: -47.5px; top: 8px; width: 12px; height: 12px; background: var(--primary); border: 4px solid var(--card-bg); border-radius: 50%; transition: border 0.3s; }
 
         .achievement { display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 18px; background: rgba(52, 152, 219, 0.05); cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
         .achievement:hover { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--primary); transform: translateY(-3px); }
@@ -95,7 +109,7 @@
         .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; background: var(--primary); color: white; font-weight: 600; transition: 0.3s; }
         .contact-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* --- 7. NEW WHATSAPP FAB --- */
+        /* --- 7. WHATSAPP FAB PULSE --- */
         .fab-whatsapp {
             position: fixed; bottom: 30px; right: 30px;
             background: var(--wa-green); color: white;
@@ -128,6 +142,8 @@
             .profile-img { transform: rotate(0); width: 150px; height: 150px; }
             table tr td { display: block; width: 100% !important; padding: 5px 0; }
             #kontak .card { grid-template-columns: 1fr !important; gap: 15px !important; display: flex; flex-direction: column; }
+            
+            body.dark-theme nav { background: #1e293b; border-bottom: 1px solid #334155; }
         }
     </style>
 </head>
@@ -170,7 +186,7 @@
         <section id="biodata">
             <h2 class="section-title" data-aos="fade-up">Personal Detail</h2>
             <div class="card" data-aos="fade-up">
-                <table style="width: 100%;">
+                <table style="width: 100%; border-collapse: collapse;">
                     <tr><td style="width: 40%; font-weight:600; padding:10px 0;">Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
                     <tr><td style="font-weight:600; padding:10px 0;">Jenis Kelamin</td><td>Laki-laki</td></tr>
                     <tr><td style="font-weight:600; padding:10px 0;">Alamat</td><td>Aceh, Indonesia</td></tr>
@@ -199,7 +215,6 @@
         <section id="prestasi">
             <h2 class="section-title" data-aos="fade-up">Prestasi & Beasiswa</h2>
             <div class="card" data-aos="fade-up" style="display: flex; flex-direction: column; gap: 20px;">
-                
                 <div class="achievement" onclick="openModal('uploads/osn.jpg')">
                     <i class="fa-solid fa-medal" style="color: #f1c40f; font-size: 30px;"></i>
                     <div>
@@ -207,7 +222,6 @@
                         <span style="opacity: 0.7; font-size: 0.9rem;">Klik untuk lihat Sertifikat</span>
                     </div>
                 </div>
-
                 <div class="achievement" onclick="openModal('uploads/beasiswa-adik.jpg')">
                     <i class="fa-solid fa-graduation-cap" style="color: #2ecc71; font-size: 30px;"></i>
                     <div>
@@ -215,7 +229,6 @@
                         <span style="opacity: 0.7; font-size: 0.9rem;">Program Afirmasi Pendidikan Tinggi</span>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -242,7 +255,6 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // 1. Loader Logic
         window.addEventListener('load', function() {
             setTimeout(function() {
                 document.getElementById('welcome-screen').classList.add('fade-out');
@@ -252,14 +264,16 @@
             }, 1200);
         });
 
-        // 2. Theme Toggle
         function toggleTheme() {
             document.body.classList.toggle("dark-theme");
             const icon = document.getElementById("theme-toggle");
-            icon.classList.toggle("fa-sun"); icon.classList.toggle("fa-moon");
+            if(document.body.classList.contains("dark-theme")) {
+                icon.classList.replace("fa-moon", "fa-sun");
+            } else {
+                icon.classList.replace("fa-sun", "fa-moon");
+            }
         }
 
-        // 3. Modal Logic (PRESTASI)
         function openModal(src) {
             document.getElementById("modal-img").src = src;
             document.getElementById("modal").style.display = "flex";
@@ -270,10 +284,8 @@
             document.body.style.overflow = "auto";
         }
 
-        // 4. Scrollspy (Bar Aktif)
         const sections = document.querySelectorAll("section");
         const navLinks = document.querySelectorAll(".nav-link");
-
         window.addEventListener("scroll", () => {
             let current = "";
             sections.forEach(section => {
@@ -282,7 +294,6 @@
                     current = section.getAttribute("id");
                 }
             });
-
             navLinks.forEach(link => {
                 link.classList.remove("active");
                 if (link.getAttribute("href").includes(current)) {
