@@ -5,17 +5,18 @@
     <title>Jaidan Fikra Annabil | Portal Mahasiswa IT</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="description" content="Profil Digital Jaidan Fikra Annabil - Mahasiswa Teknologi Informasi UIN Ar-Raniry.">
+    <meta name="description" content="Profil Digital Jaidan Fikra Annabil, Mahasiswa TI UIN Ar-Raniry (NIM: 240705093). Fokus pada solusi digital dan pengembangan IT.">
     <meta name="google-site-verification" content="Z5l-P3WtFLYcKmoMxTK4Yoqq_6mxdOui0jF7DdtRFjA" />
     <meta name="author" content="Jaidan Fikra Annabil">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jaidanfikra.github.io/web-mahasiswa/"> 
     <meta property="og:title" content="Jaidan Fikra Annabil | Portal Mahasiswa IT">
-    <meta property="og:description" content="Halo! Saya Jaidan, Mahasiswa IT UIN Ar-Raniry. Lihat profil digital dan riwayat pendidikan saya di sini.">
+    <meta property="og:description" content="Mahasiswa Teknologi Informasi UIN Ar-Raniry. Lihat profil, prestasi OSN, dan riwayat pendidikan saya.">
     <meta property="og:image" content="https://jaidanfikra.github.io/web-mahasiswa/uploads/default.png"> 
 
-    <link rel="icon" type="image/png" href="uploads/default.png">
+    <link rel="icon" type="image/png" href="https://jaidanfikra.github.io/web-mahasiswa/uploads/default.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -32,16 +33,14 @@
             --wa-green: #25d366;
         }
 
-        /* --- PERBAIKAN NIGHT MODE --- */
         body.dark-theme {
             --light-bg: #0f172a;
-            --card-bg: #1e293b; /* Lebih solid agar kontras di HP */
+            --card-bg: #1e293b;
             --text: #f1f5f9;
             --dark: #020617;
             --timeline-line: #334155;
         }
 
-        /* Pastikan semua teks elemen mengikuti variabel warna */
         body.dark-theme table, 
         body.dark-theme table td,
         body.dark-theme .timeline-item,
@@ -51,10 +50,10 @@
         }
 
         body.dark-theme .achievement span {
-            color: #94a3b8; /* Warna abu terang untuk sub-teks */
+            color: #94a3b8;
         }
 
-        /* --- 1. WELCOME SCREEN --- */
+        /* --- WELCOME SCREEN --- */
         #welcome-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--dark); display: flex; justify-content: center; align-items: center;
@@ -62,18 +61,18 @@
         }
         .welcome-content { text-align: center; color: white; opacity: 0; transform: translateY(20px); animation: welcomeFadeIn 0.8s ease forwards; }
         .welcome-profile { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary); margin-bottom: 20px; }
-        .welcome-name { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .welcome-name { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #fff 30%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         @keyframes welcomeFadeIn { to { opacity: 1; transform: translateY(0); } }
         .fade-out { opacity: 0 !important; visibility: hidden !important; }
 
-        /* --- 2. BASE STYLES --- */
+        /* --- BASE STYLES --- */
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Poppins', sans-serif; margin: 0; background: var(--light-bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         main { opacity: 0; transition: 1s; }
         body.loaded main { opacity: 1; }
 
-        /* --- 3. HEADER & NAV --- */
+        /* --- HEADER & NAV --- */
         header { background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%); color: white; padding: 120px 20px; text-align: center; clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%); }
         
         nav { 
@@ -88,13 +87,14 @@
 
         #theme-toggle { cursor: pointer; margin-left: 20px; font-size: 20px; color: var(--primary); transition: 0.3s; }
 
-        /* --- 4. CARDS & SECTIONS --- */
-        section { padding: 100px 20px; max-width: 900px; margin: 0 auto; }
+        /* --- CARDS --- */
+        section { padding: 80px 20px; max-width: 900px; margin: 0 auto; }
         .card { background: var(--card-bg); padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); transition: background 0.3s; }
         .section-title { text-align: center; margin-bottom: 50px; font-weight: 700; font-size: 2rem; color: var(--primary); }
-        .profile-img { width: 180px; height: 180px; border-radius: 30px; object-fit: cover; border: 4px solid var(--primary); transform: rotate(-3deg); }
+        .profile-img { width: 180px; height: 180px; border-radius: 30px; object-fit: cover; border: 4px solid var(--primary); transform: rotate(-3deg); transition: 0.5s; }
+        .profile-img:hover { transform: rotate(0deg) scale(1.05); }
 
-        /* --- 5. TIMELINE & PRESTASI --- */
+        /* --- TIMELINE --- */
         .timeline { position: relative; padding-left: 40px; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background: var(--timeline-line); }
         .timeline-item { position: relative; margin-bottom: 40px; }
@@ -103,14 +103,14 @@
         .achievement { display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 18px; background: rgba(52, 152, 219, 0.05); cursor: pointer; transition: 0.3s; border: 1px solid transparent; }
         .achievement:hover { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--primary); transform: translateY(-3px); }
 
-        /* --- 6. MODAL --- */
+        /* --- MODAL --- */
         .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; padding: 20px; }
         .modal img { max-width: 100%; max-height: 80vh; border-radius: 10px; }
 
         .contact-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px; border-radius: 15px; text-decoration: none; background: var(--primary); color: white; font-weight: 600; transition: 0.3s; }
         .contact-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* --- 7. WHATSAPP FAB PULSE --- */
+        /* --- WHATSAPP FAB --- */
         .fab-whatsapp {
             position: fixed; bottom: 30px; right: 30px;
             background: var(--wa-green); color: white;
@@ -125,15 +125,13 @@
             background: var(--wa-green); border-radius: 50%;
             z-index: -1; animation: pulse-green 2s infinite;
         }
-        .fab-whatsapp:hover { transform: scale(1.1) rotate(10deg); background: #20ba5a; color: white; }
-
         @keyframes pulse-green {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        /* --- 8. MOBILE FIX --- */
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 768px) {
             header { padding: 80px 20px; }
             nav { overflow-x: auto; justify-content: flex-start; padding: 15px 10px; }
@@ -143,8 +141,6 @@
             .profile-img { transform: rotate(0); width: 150px; height: 150px; }
             table tr td { display: block; width: 100% !important; padding: 5px 0; }
             #kontak .card { grid-template-columns: 1fr !important; gap: 15px !important; display: flex; flex-direction: column; }
-            
-            body.dark-theme nav { background: #1e293b; border-bottom: 1px solid #334155; }
         }
     </style>
 </head>
@@ -152,9 +148,9 @@
 
     <div id="welcome-screen">
         <div class="welcome-content">
-            <img src="uploads/default.png" alt="Profile" class="welcome-profile">
+            <img src="uploads/default.png" alt="Profile Jaidan" class="welcome-profile">
             <h1 class="welcome-name">Jaidan Fikra Annabil</h1>
-            <p>Profil - Portal Mahasiswa</p>
+            <p>Portal Mahasiswa Teknologi Informasi</p>
         </div>
     </div>
 
@@ -170,7 +166,7 @@
             <a href="#pendidikan" class="nav-link">Pendidikan</a>
             <a href="#prestasi" class="nav-link">Prestasi</a>
             <a href="#kontak" class="nav-link">Kontak</a>
-            <i class="fa-solid fa-moon" id="theme-toggle" onclick="toggleTheme()"></i>
+            <i class="fa-solid fa-moon" id="theme-toggle" onclick="toggleTheme()" aria-label="Ganti Tema"></i>
         </nav>
 
         <section id="profil">
@@ -178,20 +174,20 @@
                 <img src="uploads/default.png" class="profile-img" alt="Jaidan Fikra Annabil">
                 <div style="flex: 1; min-width: 250px;">
                     <h2 style="color: var(--primary); margin-top:0;">Halo, Saya Jaidan.</h2>
-                    <p>Mahasiswa Teknologi Informasi di <b>UIN Ar-Raniry</b> yang berfokus pada pengembangan solusi digital.</p>
-                    <div style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">NIM: 240705093</div>
+                    <p>Mahasiswa Teknologi Informasi di <b>UIN Ar-Raniry</b> yang berdedikasi dalam membangun solusi digital yang inovatif.</p>
+                    <div style="font-size: 1rem; color: var(--primary); font-weight: 700; background: rgba(52,152,219,0.1); display: inline-block; padding: 5px 15px; border-radius: 10px;">NIM: 240705093</div>
                 </div>
             </div>
         </section>
 
         <section id="biodata">
-            <h2 class="section-title" data-aos="fade-up">Personal Detail</h2>
+            <h2 class="section-title" data-aos="fade-up">Detail Personal</h2>
             <div class="card" data-aos="fade-up">
                 <table style="width: 100%; border-collapse: collapse;">
-                    <tr><td style="width: 40%; font-weight:600; padding:10px 0;">Lahir</td><td>Aceh Singkil, 30 Mei 2006</td></tr>
-                    <tr><td style="font-weight:600; padding:10px 0;">Jenis Kelamin</td><td>Laki-laki</td></tr>
-                    <tr><td style="font-weight:600; padding:10px 0;">Alamat</td><td>Aceh, Indonesia</td></tr>
-                    <tr><td style="font-weight:600; padding:10px 0;">Status</td><td>Mahasiswa Aktif</td></tr>
+                    <tr><td style="width: 40%; font-weight:600; padding:12px 0; border-bottom: 1px solid var(--timeline-line);">Tempat, Tgl Lahir</td><td style="border-bottom: 1px solid var(--timeline-line);">Aceh Singkil, 30 Mei 2006</td></tr>
+                    <tr><td style="font-weight:600; padding:12px 0; border-bottom: 1px solid var(--timeline-line);">Jenis Kelamin</td><td style="border-bottom: 1px solid var(--timeline-line);">Laki-laki</td></tr>
+                    <tr><td style="font-weight:600; padding:12px 0; border-bottom: 1px solid var(--timeline-line);">Domisili</td><td style="border-bottom: 1px solid var(--timeline-line);">Aceh, Indonesia</td></tr>
+                    <tr><td style="font-weight:600; padding:12px 0;">Status Akademik</td><td>Mahasiswa Aktif</td></tr>
                 </table>
             </div>
         </section>
@@ -220,38 +216,38 @@
                     <i class="fa-solid fa-medal" style="color: #f1c40f; font-size: 30px;"></i>
                     <div>
                         <b>Juara OSN Informatika 2023</b><br>
-                        <span style="opacity: 0.7; font-size: 0.9rem;">Klik untuk lihat Sertifikat</span>
+                        <span style="opacity: 0.7; font-size: 0.9rem;">Klik untuk melihat sertifikat</span>
                     </div>
                 </div>
                 <div class="achievement">
                     <i class="fa-solid fa-graduation-cap" style="color: #2ecc71; font-size: 30px;"></i>
                     <div>
                         <b>Penerima Beasiswa ADik 2024</b><br>
-                        <span style="opacity: 0.7; font-size: 0.9rem;">Program Afirmasi Pendidikan Tinggi</span>
+                        <span style="opacity: 0.7; font-size: 0.9rem;">Afirmasi Pendidikan Tinggi</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="kontak">
-            <h2 class="section-title" data-aos="fade-up">Kontak</h2>
+            <h2 class="section-title" data-aos="fade-up">Hubungi Saya</h2>
             <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" data-aos="fade-up">
                 <a href="mailto:jaidanfikra@gmail.com" class="contact-btn"><i class="fa-solid fa-envelope"></i> Email</a>
                 <a href="https://instagram.com/jaidanfikraannabil" target="_blank" rel="noopener noreferrer" class="contact-btn" style="background:#e1306c;"><i class="fa-brands fa-instagram"></i> Instagram</a>
             </div>
         </section>
 
-        <a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" title="Hubungi saya di WhatsApp">
+        <a href="https://wa.me/6282294290352" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" title="Hubungi via WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
 
         <footer>
-            <p style="text-align: center; opacity: 0.6; padding: 40px 0;">© 2026 Profil - Jaidan Fikra Annabil</p>
+            <p style="text-align: center; opacity: 0.6; padding: 40px 0;">© 2026 Profil Digital | Jaidan Fikra Annabil</p>
         </footer>
     </main>
 
     <div id="modal" class="modal" onclick="closeModal()">
-        <img id="modal-img" src="" alt="Certificate View">
+        <img id="modal-img" src="" alt="View Dokumentasi">
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -285,6 +281,7 @@
             document.body.style.overflow = "auto";
         }
 
+        // Navigation Highlight
         const sections = document.querySelectorAll("section");
         const navLinks = document.querySelectorAll(".nav-link");
         window.addEventListener("scroll", () => {
